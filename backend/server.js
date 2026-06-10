@@ -12,9 +12,13 @@ const adminRoutes = require("./routes/adminRoutes");
 const app = express();
 
 // FIRST MIDDLEWARES
+const allowedOrigins = process.env.FRONTEND_URL 
+  ? [process.env.FRONTEND_URL, "http://localhost:5173"] 
+  : "http://localhost:5173";
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
@@ -41,6 +45,7 @@ mongoose
   });
 
 // SERVER
-app.listen(5000, () => {
-  console.log("Server Running");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server Running on port ${PORT}`);
 });

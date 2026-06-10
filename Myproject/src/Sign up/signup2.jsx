@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 // import Navbar from "../components/Navbar";
 import { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import image from "../assets/12.jpg";
 import InputField from "./InputField";
 import Button from "./Button";
@@ -140,7 +141,7 @@ try {
   const response =
     await axios.post(
 
-      "http://localhost:5000/api/auth/signup",
+      `${API_BASE_URL}/api/auth/signup`,
 
       {
         name: formData.username,

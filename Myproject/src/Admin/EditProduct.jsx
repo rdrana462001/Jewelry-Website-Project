@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import { useParams, useNavigate } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 
@@ -27,7 +28,7 @@ const [imageFile, setImageFile] = useState(null);
   const fetchProduct = async () => {
     try {
       // Assuming GET /api/products/:id exists
-      const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+      const response = await axios.get(`${API_BASE_URL}/api/products/${id}`);
       setProduct(response.data);
 
       if (
@@ -60,7 +61,7 @@ setSubCategory(response.data.category);
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5000/api/products/${id}`,
+        `${API_BASE_URL}/api/products/${id}`,
         product
       );
       alert("Product Updated Successfully");
@@ -211,7 +212,7 @@ setSubCategory(response.data.category);
     <img
       src={
         product.image.startsWith("/uploads")
-          ? `http://localhost:5000${product.image}`
+          ? `${API_BASE_URL}${product.image}`
           : product.image
       }
       alt="Preview"

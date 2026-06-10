@@ -4,6 +4,7 @@ import React, {
 } from "react";
 
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 import AdminNavbar from "./AdminNavbar";
 import AdminSidebar from "./AdminSidebar";
@@ -38,7 +39,7 @@ function AdminUsers() {
 
       const response =
         await axios.get(
-          "http://localhost:5000/api/auth/users"
+          `${API_BASE_URL}/api/auth/users`
         );
 
       setUsers(
@@ -66,7 +67,7 @@ const editUser = async (user) => {
   try {
 
     await axios.put(
-      `http://localhost:5000/api/auth/users/${user._id}`,
+      `${API_BASE_URL}/api/auth/users/${user._id}`,
       {
         name: newName
       }
@@ -95,7 +96,7 @@ const editUser = async (user) => {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/auth/users/${id}`
+        `${API_BASE_URL}/api/auth/users/${id}`
       );
 
       fetchUsers();
@@ -124,7 +125,7 @@ const saveUser = async (id) => {
   try {
 
     await axios.put(
-      `http://localhost:5000/api/auth/users/${id}`,
+      `${API_BASE_URL}/api/auth/users/${id}`,
       editData
     );
 

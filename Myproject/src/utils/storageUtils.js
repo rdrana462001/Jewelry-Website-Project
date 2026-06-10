@@ -3,6 +3,8 @@
  * Ensures each logged-in user has their own separate cart and wishlist
  */
 
+import API_BASE_URL from "../config/api";
+
 /**
  * Get the current user from localStorage
  */
@@ -56,7 +58,7 @@ export const setCart = (items) => {
 
     const user = getCurrentUser();
     if (user && user._id) {
-      fetch(`http://localhost:5000/api/auth/users/${user._id}/cart`, {
+      fetch(`${API_BASE_URL}/api/auth/users/${user._id}/cart`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cart: items })
@@ -90,7 +92,7 @@ export const setWishlist = (items) => {
 
     const user = getCurrentUser();
     if (user && user._id) {
-      fetch(`http://localhost:5000/api/auth/users/${user._id}/wishlist`, {
+      fetch(`${API_BASE_URL}/api/auth/users/${user._id}/wishlist`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ wishlist: items })

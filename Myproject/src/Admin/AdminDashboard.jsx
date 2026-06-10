@@ -11,6 +11,7 @@ import DashboardHeader from "./components/DashboardHeader";
 import LatestCustomers from "./components/LatestCustomers";
 import LowStockProducts from "./components/LowStockProducts";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import ThemeToggle from "./Components/ThemeToggle";
 
 function AdminDashboard() {
@@ -33,7 +34,7 @@ const [darkMode, setDarkMode] = useState(false);
   // }, []);
 const fetchOrders = async () => {
   const res = await axios.get(
-    "http://localhost:5000/api/orders"
+    `${API_BASE_URL}/api/orders`
   );
 
   setOrders(res.data);
@@ -46,7 +47,7 @@ useEffect(() => {
 }, []);
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/products");
+      const response = await axios.get(`${API_BASE_URL}/api/products`);
       setProducts(response.data);
     } catch (error) {
       console.log("Error fetching products:", error);
@@ -56,7 +57,7 @@ useEffect(() => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/auth/users"
+        `${API_BASE_URL}/api/auth/users`
       );
       setUsers(response.data);
     } catch (error) {
@@ -68,7 +69,7 @@ useEffect(() => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/admin/stats"
+        `${API_BASE_URL}/api/admin/stats`
       );
       setStats(response.data);
     } catch (error) {
@@ -83,7 +84,7 @@ useEffect(() => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/auth/users/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/auth/users/${id}`);
       fetchUsers();
     } catch (error) {
       console.log("Error deleting user:", error);

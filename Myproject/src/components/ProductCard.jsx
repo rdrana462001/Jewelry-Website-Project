@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Button from "../component/button";
 import { addToCart as addToCartUtil, addToWishlist as addToWishlistUtil } from "../utils/storageUtils";
 import { toast } from "react-toastify";
+import API_BASE_URL from "../config/api";
 
 // import Button from "../pages/components/Button";
 export default function ProductCard({ item }) {
@@ -35,7 +36,7 @@ const addToWishlist = (e) => {
   <img
   src={
     item.image?.startsWith("/uploads")
-      ? `http://localhost:5000${item.image}`
+      ? `${API_BASE_URL}${item.image}`
       : item.image
   }
   alt={item.name}

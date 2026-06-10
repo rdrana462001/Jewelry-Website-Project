@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import Navbar from "../components/Navbar";
 import { addToCart as addToCartUtil, addToWishlist as addToWishlistUtil } from "../utils/storageUtils";
 
@@ -18,7 +19,7 @@ function ProductDetails() {
   // Fetch product from MongoDB using the _id
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/products/${id}`)
+      .get(`${API_BASE_URL}/api/products/${id}`)
       .then((res) => {
         setProduct(res.data);
         setLoading(false);

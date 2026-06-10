@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import image from "../assets/12.jpg";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import { toast } from "react-toastify";
 // import Navbar from "../components/Navbar";
 function Login() {
@@ -31,7 +32,7 @@ const handleSubmit = async (e) => {
     const response =
       await axios.post(
 
-        "http://localhost:5000/api/auth/login",
+        `${API_BASE_URL}/api/auth/login`,
 
         {
           email: formData.email,

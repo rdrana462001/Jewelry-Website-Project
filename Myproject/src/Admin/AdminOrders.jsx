@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import AdminNavbar from "./AdminNavbar";
 import AdminSidebar from "./AdminSidebar";
 
@@ -14,7 +15,7 @@ function AdminOrders() {
   const fetchOrders = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/orders"
+        `${API_BASE_URL}/api/orders`
       );
 
       setOrders(res.data);
@@ -26,7 +27,7 @@ function AdminOrders() {
   const acceptOrder = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/orders/${id}/accept`
+        `${API_BASE_URL}/api/orders/${id}/accept`
       );
 
       fetchOrders();
@@ -38,7 +39,7 @@ function AdminOrders() {
 const deliverOrder = async (id) => {
   try {
     await axios.put(
-      `http://localhost:5000/api/orders/${id}/deliver`
+      `${API_BASE_URL}/api/orders/${id}/deliver`
     );
 
     fetchOrders();
@@ -50,7 +51,7 @@ const deliverOrder = async (id) => {
   const rejectOrder = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/orders/${id}/reject`
+        `${API_BASE_URL}/api/orders/${id}/reject`
       );
 
       fetchOrders();

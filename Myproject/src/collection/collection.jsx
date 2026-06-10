@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import "./Collection.css";
 
 import Navbar from "../components/Navbar";
@@ -29,7 +30,7 @@ const [sortBy, setSortBy] = useState("");
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get(`${API_BASE_URL}/api/products`)
       .then((res) => setProducts(res.data))
       .catch((err) => console.log(err));
   }, []);

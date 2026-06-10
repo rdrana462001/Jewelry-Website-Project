@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import OrderSummary from "../pages/components/OrderSummary";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import { getWishlist, getCartCount } from "../utils/storageUtils";
 // Simplified profile page: safe, preserves auth/localStorage and edit/save/cancel behavior
 export default function Profile() {
@@ -27,7 +28,7 @@ const [orders, setOrders] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const fetchUserData = async (userId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/users/${userId}`);
+      const res = await axios.get(`${API_BASE_URL}/api/auth/users/${userId}`);
       const data = res.data;
       setUser(data);
       setForm({
@@ -52,7 +53,7 @@ const [orders, setOrders] = useState([]);
 
   const fetchOrders = async (userId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/orders/user/${userId}`);
+      const res = await axios.get(`${API_BASE_URL}/api/orders/user/${userId}`);
       setOrders(res.data);
     } catch (err) {
       console.log(err);
@@ -103,7 +104,7 @@ const [orders, setOrders] = useState([]);
     const updated = { ...user, ...form, photo: photoPreview };
     
     try {
-      await axios.put(`http://localhost:5000/api/auth/users/${user._id}`, {
+      await axios.put(`${API_BASE_URL}/api/auth/users/${user._id}`, {
         name: updated.name,
         email: updated.email,
         phone: updated.phone,
@@ -529,7 +530,7 @@ w-full
   src={
     item.image?.startsWith("http")
       ? item.image
-      : `http://localhost:5000${item.image}`
+      : `${API_BASE_URL}${item.image}`
   }
   alt={item.name}
   className="w-16 h-16 object-cover rounded-lg shadow-sm"
@@ -569,7 +570,7 @@ w-full
   src={
     item.image?.startsWith("http")
       ? item.image
-      : `http://localhost:5000${item.image}`
+      : `${API_BASE_URL}${item.image}`
   }
   alt={item.name}
   className="w-16 h-16 object-cover rounded-lg"

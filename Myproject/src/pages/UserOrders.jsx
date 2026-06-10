@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import Navbar from "../components/Navbar";
 import "../collection/Collection.css";
 import { jsPDF } from "jspdf";
@@ -23,7 +24,7 @@ function UserOrders() {
   const fetchUserOrders = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/orders/user/${user._id}`
+        `${API_BASE_URL}/api/orders/user/${user._id}`
       );
       setOrders(res.data);
     } catch (error) {

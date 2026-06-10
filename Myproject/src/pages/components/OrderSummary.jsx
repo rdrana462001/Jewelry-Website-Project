@@ -2,6 +2,7 @@ import Button from "../../component/button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import API_BASE_URL from "../../config/api";
 
 
 function OrderSummary({ subtotal, tax, shipping, savings, total, formatPrice }) {
@@ -21,7 +22,7 @@ function OrderSummary({ subtotal, tax, shipping, savings, total, formatPrice }) 
       }
 
       // Create order on backend
-      const response = await fetch("http://localhost:5000/api/orders/create", {
+      const response = await fetch(`${API_BASE_URL}/api/orders/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,7 +114,7 @@ toast.error(
       const cart = JSON.parse(localStorage.getItem(`cart_${user._id}`)) || [];
 
       const response = await fetch(
-        "http://localhost:5000/api/orders/verify",
+        `${API_BASE_URL}/api/orders/verify`,
         {
           method: "POST",
           headers: {

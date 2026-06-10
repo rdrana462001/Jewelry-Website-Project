@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import AdminNavbar from "./AdminNavbar";
 import AdminSidebar from "./AdminSidebar";
 import { toast } from "react-toastify";
@@ -68,7 +69,7 @@ const handleSubmit = async (e) => {
     }
 
     const response = await axios.post(
-      "http://localhost:5000/api/products",
+      `${API_BASE_URL}/api/products`,
       formData,
       {
         headers: {

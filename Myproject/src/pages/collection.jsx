@@ -6,6 +6,7 @@ import CollectionHeader from "../components/collection/CollectionHeader";
 import SearchBar from "../components/collection/SearchBar";
 import ProductGrid from "../components/collection/ProductGrid";
 import { useLocation } from "react-router-dom";
+import API_BASE_URL from "../config/api";
 
 function Collection() {
   const { category } = useParams();
@@ -16,7 +17,7 @@ function Collection() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get(`${API_BASE_URL}/api/products`)
       .then((res) => {
         setProducts(res.data);
       })
