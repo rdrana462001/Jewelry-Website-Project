@@ -27,7 +27,7 @@ import UserOrders from "./pages/UserOrders";
 import ForgotPassword from "./Login/ForgotPassword";
 // import Premium from "./Luxury/Premium";
 // import Rings from "../luxury/rings";
-import Cart from "./pages/cart";
+import Cart from "./pages/Cart";
 // import Admin from "./pages/Admin";
 // import AdminDashboard from "./pages/AdminDashboard";
 
