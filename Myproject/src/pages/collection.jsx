@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import CollectionHeader from "../components/collection/CollectionHeader";
-import SearchBar from "../components/collection/SearchBar";
-import ProductGrid from "../components/collection/ProductGrid";
+import CollectionHeader from "../collection/CollectionHeader";
+import SearchBar from "../collection/SearchBar";
+import ProductGrid from "../collection/ProductGrid";
 import { useLocation } from "react-router-dom";
 import API_BASE_URL from "../config/api";
 
