@@ -103,56 +103,57 @@ if (sortBy === "name") {
 }
 
   return (
-<div className="min-h-screen animated-bg">
-        <Navbar />
-<div className="pt-32 px-5 md:px-10 pb-20">
+    <>
+      <Navbar />
+      <div
+        className="animated-bg pt-36 pb-10 px-4 lg:px-10 lg:pb-22"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="flex flex-col lg:flex-row items-start gap-8 max-w-[1800px] mx-auto">
+          
+          {/* Left Side (Products & Headers) */}
+          <div className="flex-1 min-w-0 w-full">
+            <div className="text-center mb-12">
+              <LuxuryHeader />
+              <div className="mt-8 flex justify-center">
+                <SearchBar
+                  searchTerm={searchTerm}
+                  onSearchChange={setSearchTerm}
+                />
+              </div>
+            </div>
 
-  <div className="flex items-start gap-8">
+            <ProductGrid products={filteredProducts} />
+          </div>
 
-    {/* Left Side */}
-    <div className="flex-1">
+          {/* Right Side Filter */}
+          <div className="w-full lg:w-[320px] flex-shrink-0 lg:sticky lg:top-36 z-10">
+            <FilterSidebar
+              categories={[
+                "All",
+                "Gold",
+                "Celebrity",
+                "Watches",
+                "Fashion",
+              ]}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              maxPrice={maxPrice}
+              setMaxPrice={setMaxPrice}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              inStock={inStock}
+              setInStock={setInStock}
+              outOfStock={outOfStock}
+              setOutOfStock={setOutOfStock}
+            />
+          </div>
 
-      <LuxuryHeader />
-
-      <div className="mb-12">
-        <SearchBar
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-        />
+        </div>
       </div>
-
-      <ProductGrid
-        products={filteredProducts}
-      />
-
-    </div>
-
-    {/* Right Side */}
-    <div className="w-[400px] flex-shrink-0">
-
-      <FilterSidebar
-        categories={[
-          "All",
-          "Gold",
-          "Celebrity",
-          "Watches",
-          "Fashion",
-        ]}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        minPrice={minPrice}
-        setMinPrice={setMinPrice}
-        maxPrice={maxPrice}
-        setMaxPrice={setMaxPrice}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-      />
-
-    </div>
-
-    </div>
-  </div>
-</div>
+    </>
   );
 }
 

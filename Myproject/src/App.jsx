@@ -23,6 +23,8 @@ import Signup2 from "./Sign up/signup2";
 import Dashboard from "./Dashboard/Dashboard";
 import Logout from "./Logout/Logout";
 import UserOrders from "./pages/UserOrders";
+
+import ForgotPassword from "./Login/ForgotPassword";
 // import Premium from "./Luxury/Premium";
 // import Rings from "../luxury/rings";
 import Cart from "./pages/cart";
@@ -62,6 +64,10 @@ function App() {
 <Route
   path="/explore"
   element={<Explore />}
+/>
+<Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
 />
         <Route
           path="/login"

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import "../collection/Collection.css";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 function UserOrders() {
   const [orders, setOrders] = useState([]);
@@ -43,6 +45,76 @@ function UserOrders() {
       default:
         return <span className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold tracking-wider">Pending</span>;
     }
+  };
+
+  const downloadBill = (order) => {
+    const doc = new jsPDF();
+
+    // Add company logo or text
+    doc.setFontSize(22);
+    doc.setTextColor(200, 155, 60); // #c89b3c
+    doc.text("LUXORA", 105, 20, null, null, "center");
+
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text("Premium Jewelry & Royal Heritage", 105, 28, null, null, "center");
+    doc.text("Ahmedabad, India | luxora@gmail.com", 105, 34, null, null, "center");
+
+    // Line break
+    doc.setDrawColor(200, 155, 60);
+    doc.setLineWidth(0.5);
+    doc.line(14, 40, 196, 40);
+
+    // Bill Details
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    doc.text(`Order ID: ${order.orderId || order._id.slice(-8).toUpperCase()}`, 14, 50);
+    doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`, 14, 58);
+    
+    doc.text(`Billed To: ${order.userName || user?.name || "Customer"}`, 120, 50);
+    doc.text(`Payment Status: ${order.paymentStatus || "Completed"}`, 120, 58);
+
+    // Table
+    const tableColumn = ["Item Description", "Quantity", "Price (INR)", "Total (INR)"];
+    const tableRows = [];
+    
+    if (order.items && order.items.length > 0) {
+      order.items.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        const itemData = [
+          item.name,
+          item.quantity,
+          `Rs. ${item.price}`,
+          `Rs. ${itemTotal}`
+        ];
+        tableRows.push(itemData);
+      });
+    } else {
+       tableRows.push(["Order Items", 1, `Rs. ${order.amount}`, `Rs. ${order.amount}`]);
+    }
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 70,
+      theme: 'grid',
+      headStyles: { fillColor: [200, 155, 60], textColor: [255, 255, 255] },
+      alternateRowStyles: { fillColor: [253, 250, 245] },
+    });
+
+    const finalY = doc.lastAutoTable.finalY || 70;
+
+    // Totals
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    doc.text(`Total Amount Paid: Rs. ${order.amount}`, 120, finalY + 15);
+
+    // Footer
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.text("Thank you for shopping with Luxora!", 105, finalY + 35, null, null, "center");
+
+    doc.save(`Invoice_${order.orderId || order._id.slice(-8)}.pdf`);
   };
 
   return (
@@ -93,6 +165,14 @@ function UserOrders() {
                     <span className="px-3 py-1 bg-green-50 text-green-700 border border-green-200 rounded-full text-sm font-semibold">
                       {order.paymentStatus || "Completed"}
                     </span>
+                  </div>
+                  <div>
+                    <button 
+                      onClick={() => downloadBill(order)}
+                      className="px-4 py-2 bg-gradient-to-r from-[#c89b3c] to-[#f5d98a] text-black font-semibold rounded-full hover:scale-105 transition-transform text-sm shadow-md"
+                    >
+                      Download Bill
+                    </button>
                   </div>
                 </div>
 

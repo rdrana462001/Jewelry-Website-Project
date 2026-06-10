@@ -398,7 +398,7 @@ focus:ring-[#d4af37]/20
             >
 
               <a
-                href="#"
+                href="/forgot-password"
                 className="
 text-[#b8860b]
 font-bold                hover:underline

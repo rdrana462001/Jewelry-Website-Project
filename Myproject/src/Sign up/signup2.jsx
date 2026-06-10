@@ -194,6 +194,35 @@ shadow-[0_20px_80px_rgba(212,175,55,0.15)]
     "
     >
 
+  {/* Gold Glow Top Left */}
+  <div
+    className="
+    absolute
+    w-[500px]
+    h-[500px]
+    bg-yellow-400/10
+    rounded-full
+    blur-[140px]
+    -top-40
+    -left-40
+    "
+  />
+
+  {/* Gold Glow Bottom Right */}
+  <div
+    className="
+    absolute
+    w-[500px]
+    h-[500px]
+    bg-amber-400/10
+    rounded-full
+    blur-[140px]
+    -bottom-40
+    -right-40
+    "
+  />
+
+
       {/* <Navbar /> */}
       {/* Main Container */}
 
@@ -237,7 +266,47 @@ shadow-[0_25px_100px_rgba(212,175,55,0.18)]
             rounded-l-[40px]
           "
           />
+<div
+ className="
+ absolute
+ inset-0
+ bg-gradient-to-t
+ from-black/70
+ via-black/20
+ to-transparent
+ "
+/>
 
+<div
+ className="
+ absolute
+ bottom-10
+ left-10
+ text-white
+ "
+>
+ <h2
+  className="
+  text-5xl
+  font-bold
+  mb-4
+  "
+  style={{ fontFamily: "serif" }}
+ >
+  Timeless Luxury
+ </h2>
+
+ <p
+  className="
+  text-lg
+  text-white/90
+  max-w-sm
+  "
+ >
+  Discover premium jewelry crafted
+  with elegance and perfection.
+ </p>
+</div>
         </div>
 
         {/* Right Side */}
@@ -277,6 +346,7 @@ to-[#fffaf0]        "
             text-lg
           "
           >
+           
 Join our luxury jewelry collection
           </p>
 
@@ -334,8 +404,8 @@ Join our luxury jewelry collection
             <Link
               to="/login"
               className="
-              text-pink-500
-              font-semibold
+             text-[#b8860b]
+font-bold
               hover:underline
             "
             >

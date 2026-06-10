@@ -141,7 +141,7 @@ toast.error(
        toast.success(
   "✨ Payment Successful! Order Created"
 );
-      navigate("/dashboard");
+      navigate("/my-orders");
       } else {
         alert("Payment verification failed. Please contact support.");
       }

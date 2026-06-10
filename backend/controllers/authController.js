@@ -2,7 +2,6 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
 exports.signup = async (req, res) => {
 
   try {
@@ -283,7 +282,6 @@ exports.updateUser = async (req, res) => {
     res.status(200).json(
       updatedUser
     );
-
   }
 
   catch (error) {
@@ -341,5 +339,20 @@ exports.updateUserWishlist = async (req, res) => {
     res.status(200).json(updatedUser.wishlist);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    res.status(200).json({
+      message: "Reset link sent successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
   }
 };

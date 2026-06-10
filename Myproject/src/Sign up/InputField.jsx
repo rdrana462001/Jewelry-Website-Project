@@ -35,15 +35,19 @@ function InputField({
         value={value}
         onChange={onChange}
         className={`
-        w-full
-        px-5
-        py-4
-        rounded-2xl
-        border
-        outline-none
-        transition-all
-        duration-300
-        bg-white/90
+     w-full
+px-5
+py-4
+rounded-2xl
+border
+border-[#d4af37]/30
+bg-[#fffdf8]
+outline-none
+transition-all
+duration-300
+focus:border-[#d4af37]
+focus:ring-4
+focus:ring-[#d4af37]/15
 
         ${
           error

@@ -38,7 +38,7 @@ return (
 // >
 <aside
   className="
-    w-[400px]
+    w-full
     bg-white
     rounded-3xl
     shadow-xl
@@ -94,7 +94,14 @@ return (
               />
 
               {cat === "Rings" && <FaRing />}
-              {cat !== "Rings" && <FaGem />}
+              {cat === "Gold" && <FaGem />}
+              {cat === "Watches" && <span className="text-lg">⌚</span>}
+              {cat === "Fashion" && <span className="text-lg">👗</span>}
+              {cat === "Celebrity" && <span className="text-lg">⭐</span>}
+              {cat === "Necklace" && <span className="text-lg">📿</span>}
+              {cat === "Bridal" && <FaGem />}
+              {cat === "Bracelet" && <FaGem />}
+              {cat === "All" && <FaGem />}
 
               {cat}
             </label>
