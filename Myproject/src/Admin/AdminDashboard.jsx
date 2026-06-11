@@ -5,14 +5,11 @@ import "./AdminDashboard.css";
 import DashboardCards from "./Components/DashboardCards";
 import RevenueChart from "./Components/RevenueChart";
 import OrdersChart from "./Components/OrdersChart";
-import RecentOrdersTable from "./components/RecentOrdersTable";
 import TopProducts from "./Components/TopProducts";
 import DashboardHeader from "./components/DashboardHeader";
-import LatestCustomers from "./components/LatestCustomers";
 import LowStockProducts from "./components/LowStockProducts";
 import axios from "axios";
 import API_BASE_URL from "../config/api";
-import ThemeToggle from "./Components/ThemeToggle";
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);

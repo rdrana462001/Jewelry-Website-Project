@@ -3,15 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import OrderSummary from "../pages/components/OrderSummary";
 import axios from "axios";
-import API_BASE_URL from "../config/api";
 import { getWishlist, getCartCount } from "../utils/storageUtils";
 // Simplified profile page: safe, preserves auth/localStorage and edit/save/cancel behavior
 export default function Profile() {
   const navigate = useNavigate();
   const fileRef = useRef(null);
 const [orders, setOrders] = useState([]);
-  const [dbCart, setDbCart] = useState([]);
-  const [dbWishlist, setDbWishlist] = useState([]);
   const [user, setUser] = useState(null);
   const [form, setForm] = useState({
     name: "",
@@ -26,62 +23,40 @@ const [orders, setOrders] = useState([]);
   const [errors, setErrors] = useState({});
   const [wishlistCount, setWishlistCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
-  const fetchUserData = async (userId) => {
-    try {
-      const res = await axios.get(`${API_BASE_URL}/api/auth/users/${userId}`);
-      const data = res.data;
-      setUser(data);
-      setForm({
-        name: data.name || "",
-        email: data.email || "",
-        phone: data.phone || "",
-        address: data.address || "",
-        city: data.city || "",
-        notes: data.notes || "",
-      });
-      setPhotoPreview(data.photo || null);
-      setDbCart(data.cart || []);
-      setDbWishlist(data.wishlist || []);
-      setWishlistCount(data.wishlist?.length || 0);
-      
-      const cartQ = (data.cart || []).reduce((acc, item) => acc + (item.quantity || 1), 0);
-      setCartCount(cartQ);
-    } catch (err) {
-      console.error("Failed to fetch user from DB:", err);
-    }
-  };
+useEffect(() => {
+  const stored = JSON.parse(localStorage.getItem("user"));
 
-  const fetchOrders = async (userId) => {
-    try {
-      const res = await axios.get(`${API_BASE_URL}/api/orders/user/${userId}`);
+  if (!stored) {
+    navigate("/login");
+    return;
+  }
+
+  setUser(stored);
+
+  setForm({
+    name: stored.name || "",
+    email: stored.email || "",
+    phone: stored.phone || "",
+    address: stored.address || "",
+    city: stored.city || "",
+    notes: stored.notes || "",
+  });
+
+  setPhotoPreview(stored.photo || null);
+
+  axios
+    .get(`http://localhost:5000/api/orders/${stored._id}`)
+    .then((res) => {
       setOrders(res.data);
-    } catch (err) {
+    })
+    .catch((err) => {
       console.log(err);
-    }
-  };
+    });
 
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("user"));
-    if (!stored) {
-      navigate("/login");
-      return;
-    }
-    
-    // Set initially from local storage for fast render
-    setUser(stored);
-    
-    // Then fetch actual DB data
-    fetchUserData(stored._id);
-    fetchOrders(stored._id);
+  setWishlistCount(getWishlist().length);
+  setCartCount(getCartCount());
 
-    const handleUpdate = () => fetchUserData(stored._id);
-    window.addEventListener("cartUpdated", handleUpdate);
-    window.addEventListener("wishlistUpdated", handleUpdate);
-    return () => {
-      window.removeEventListener("cartUpdated", handleUpdate);
-      window.removeEventListener("wishlistUpdated", handleUpdate);
-    };
-  }, [navigate]);
+}, [navigate]);
   const handleChange = (k, v) => {
     setForm((s) => ({ ...s, [k]: v }));
     setErrors((e) => ({ ...e, [k]: "" }));
@@ -104,7 +79,7 @@ const [orders, setOrders] = useState([]);
     const updated = { ...user, ...form, photo: photoPreview };
     
     try {
-      await axios.put(`${API_BASE_URL}/api/auth/users/${user._id}`, {
+      await axios.put(`http://localhost:5000/api/auth/users/${user._id}`, {
         name: updated.name,
         email: updated.email,
         phone: updated.phone,
@@ -161,40 +136,32 @@ const [orders, setOrders] = useState([]);
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#f8f5ef] flex  items-center justify-center">
+      <div className="min-h-screen bg-[#f8f5ef] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#c89b3c]" />
       </div>
     );
   }
 
   return (
-    <>
-<div className="min-h-screen bg-gradient-to-br from-[#f8f5ef] via-white to-[#faf6ed] flex flex-col">      <Navbar />
-{/* <main className="pt-32"> */}
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-[#f8f5ef] via-white to-[#faf6ed] flex flex-col">
+      <Navbar />
 
+      <div className="flex-1 overflow-y-auto pt-28 pb-8 px-4 sm:px-6 md:px-10 lg:px-16 flex items-start">
+        {/* <div className="max-w-7xl mx-auto"> */}
           {/* <div className="w-full px-8"> */}
-<div className="
-max-w-[2200px]
-mx-auto
-px-4
-pt-9
-lg:px-8
-w-full
-">         {/* Page Title */}
-<div className="flex-1 pt-10 pb-2 px-4 sm:px-6 md:px-10 lg:px-16">
-<div className="mb-8">
-    <h1 className="text-4xl md:text-5xl font-serif font-bold text-black">
-    {/* My profile */}
-  </h1>
+<div className="max-w-[2200px] mx-auto px-4 lg:px-8 w-full">
+          {/* Page Title */}
+          <div className="mb-12">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-black">My Profile</h1>
+            <p className="text-gray-600 text-lg mt-2">Manage your account information</p>
+          </div>
 
-  <p className="text-gray-600 text-lg mt-2">
-    {/* Manage your account information */}
-  </p>
-</div>
+          {/* Main Grid */}
+<div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
 
-<div className="grid grid-cols-1 pt-14 lg:grid-cols-4 gap-10">  
-<aside className="lg:col-span-1 h-full">
-                  <div className="bg-white/80 backdrop-blur-md rounded-3xl p-5 lg:p-6 flex flex-col items-center text-center shadow-lg border border-[#c89b3c]/10">
+            {/* LEFT - Profile card */}
+<aside className="lg:col-span-1">
+                <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 lg:p-8 flex flex-col items-center text-center shadow-lg border border-[#c89b3c]/10">
                 {/* Profile Photo */}
                 <div className="relative mb-6">
                   <div className="w-44 h-44 rounded-full bg-gradient-to-br from-[#c89b3c]/20 to-gray-100 overflow-hidden shadow-2xl ring-4 ring-white flex items-center justify-center">
@@ -240,81 +207,27 @@ w-full
                 </div>
 
                 {/* Quick Stats */}
-              <div className="mt-8 w-full grid grid-cols-3 gap-4">
-
-  {/* Orders */}
-  <div
-    className="
-    bg-[#f8f5ef]
-    rounded-2xl
-    p-4
-    text-center
-    border
-    border-[#c89b3c]/20
-    hover:shadow-lg
-    hover:-translate-y-1
-    transition-all
-    duration-300
-    "
-  >
-    <div className="text-3xl font-bold text-[#c89b3c]">
-      {orders.length}
-    </div>
-
-    <div className="text-sm text-gray-600 mt-2 font-semibold">
-      Orders
-    </div>
-  </div>
-
-  {/* Wishlist */}
-  <div
-    className="
-    bg-[#f8f5ef]
-    rounded-2xl
-    p-4
-    text-center
-    border
-    border-[#c89b3c]/20
-    hover:shadow-lg
-    hover:-translate-y-1
-    transition-all
-    duration-300
-    "
-  >
-    <div className="text-3xl font-bold text-[#c89b3c]">
-      {wishlistCount}
-    </div>
-
-    <div className="text-sm text-gray-600 mt-2 font-semibold">
-      Wishlist
-    </div>
-  </div>
-
-  {/* Cart */}
-  <div
-    className="
-    bg-[#f8f5ef]
-    rounded-2xl
-    p-4
-    text-center
-    border
-    border-[#c89b3c]/20
-    hover:shadow-lg
-    hover:-translate-y-1
-    transition-all
-    duration-300
-    "
-  >
-    <div className="text-3xl font-bold text-[#c89b3c]">
-      {cartCount}
-    </div>
-
-    <div className="text-sm text-gray-600 mt-2 font-semibold">
-      Cart
-    </div>
-  </div>
-
-</div>
+                <div className="mt-8 w-full grid grid-cols-3 gap-4 py-8 border-y border-gray-200">
+                  <div className="text-center hover:bg-[#f8f5ef] p-3 rounded-xl transition">
+<div className="text-3xl font-bold text-black">
+  {orders.length}
+</div>                    <div className="text-xs text-gray-600 mt-2 font-semibold">
+                      Orders
+                    </div>
+                  </div>
+                  <div className="text-center hover:bg-[#f8f5ef] p-3 rounded-xl transition">
+                    <div className="text-3xl font-bold text-black">{wishlistCount}</div>
+                    <div className="text-xs text-gray-600 mt-2 font-semibold">
+                      Wishlist
+                    </div>
+                  </div>
+                  <div className="text-center hover:bg-[#f8f5ef] p-3 rounded-xl transition">
+                    <div className="text-3xl font-bold text-black">{cartCount}</div>
+                    <div className="text-xs text-gray-600 mt-2 font-semibold">
+                      Cart
+                    </div>
+                  </div>
+                </div>
 
                 {/* Action Buttons */}
                 <div className="mt-8 w-full space-y-3">
@@ -371,8 +284,9 @@ w-full
             </aside>
 
             {/* RIGHT - Form and notes */}
-<div className="lg:col-span-3 space-y-4 pr-2">                {/* Personal Information */}
-              <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 lg:p-8 shadow-lg border-2 border-500 hover:shadow-xl transition">
+            <div className="lg:col-span-3 space-y-6">
+              {/* Personal Information */}
+              <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 lg:p-8 shadow-lg border border-[#c89b3c]/10 hover:shadow-xl transition">
                 <div className="flex items-center justify-between mb-8 pb-6 border-b-2 border-gray-200">
                   <h2 className="text-2xl md:text-3xl font-serif font-bold text-black">
                     Personal Information
@@ -497,7 +411,7 @@ w-full
                   Personal Notes
                 </label>
                 <textarea
-                  rows={3}
+                  rows={5}
                   value={form.notes || ""}
                   onChange={(e) => handleChange("notes", e.target.value)}
                   disabled={!editing}
@@ -508,126 +422,8 @@ w-full
                       : "border-gray-200 bg-gray-50"
                   }`}
                 />
+                
               </div>
-
-              {/* Wishlist Section */}
-              {/* <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 lg:p-8 shadow-lg border border-[#c89b3c]/10 hover:shadow-xl transition">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-gray-200">
-                  <h3 className="text-2xl font-serif font-bold text-black">
-                    My Wishlist
-                  </h3>
-                  <span className="bg-[#c89b3c] text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {dbWishlist.length} Items
-                  </span>
-                </div>
-                {dbWishlist.length === 0 ? (
-                  <p className="text-gray-500 text-sm">Your wishlist is empty.</p>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {dbWishlist.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-[#c89b3c]/30 transition bg-white/50">
-                     <img
-  src={
-    item.image?.startsWith("http")
-      ? item.image
-      : `${API_BASE_URL}${item.image}`
-  }
-  alt={item.name}
-  className="w-16 h-16 object-cover rounded-lg shadow-sm"
-  onError={(e) => {
-    e.target.src =
-      "https://via.placeholder.com/150";
-  }}
-/>
-                        <div>
-                          <h4 className="font-semibold text-black line-clamp-1">{item.name}</h4>
-                          <p className="text-[#c89b3c] font-bold text-sm">₹{item.price}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div> */}
-
-              {/* Cart Section */}
-              {/* <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 lg:p-8 shadow-lg border border-[#c89b3c]/10 hover:shadow-xl transition">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-gray-200">
-                  <h3 className="text-2xl font-serif font-bold text-black">
-                    My Cart
-                  </h3>
-                  <span className="bg-[#c89b3c] text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {cartCount} Items
-                  </span>
-                </div>
-                {dbCart.length === 0 ? (
-                  <p className="text-gray-500 text-sm">Your cart is empty.</p>
-                ) : (
-                  <div className="space-y-4">
-                    {dbCart.map((item, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:border-[#c89b3c]/30 transition bg-white/50">
-                        <div className="flex items-center gap-4">
-<img
-  src={
-    item.image?.startsWith("http")
-      ? item.image
-      : `${API_BASE_URL}${item.image}`
-  }
-  alt={item.name}
-  className="w-16 h-16 object-cover rounded-lg"
-  onError={(e) => {
-    console.log(item.image);
-    e.target.src =
-      "https://via.placeholder.com/150";
-  }}
-/>                          <div>
-                            <h4 className="font-semibold text-black line-clamp-1">{item.name}</h4>
-                            <p className="text-[#c89b3c] font-bold text-sm">₹{item.price}</p>
-                          </div>
-                        </div>
-                        <div className="text-sm font-semibold bg-gray-100 px-3 py-1 rounded-md">
-                          Qty: {item.quantity || 1}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div> */}
-
-              {/* Orders Section */}
-              {/* <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 lg:p-8 shadow-lg border border-[#c89b3c]/10 hover:shadow-xl transition">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-gray-200">
-                  <h3 className="text-2xl font-serif font-bold text-black">
-                    My Orders
-                  </h3>
-                  <span className="bg-[#c89b3c] text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {orders.length} Orders
-                  </span>
-                </div>
-                {orders.length === 0 ? (
-                  <p className="text-gray-500 text-sm">You haven't placed any orders yet.</p>
-                ) : (
-                  <div className="space-y-4">
-                    {orders.map((order, idx) => (
-                      <div key={idx} className="p-5 rounded-xl border border-gray-100 hover:border-[#c89b3c]/30 transition bg-white/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div>
-                          <p className="text-xs text-gray-500 uppercase font-semibold mb-1">Order #{order._id.substring(0, 8)}</p>
-                          <h4 className="font-bold text-black text-lg">₹{order.totalAmount || order.total}</h4>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {new Date(order.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
-                          order.status === 'Delivered' ? 'bg-green-100 text-green-700' :
-                          order.status === 'Cancelled' ? 'bg-red-100 text-red-700' :
-                          'bg-[#c89b3c]/10 text-[#c89b3c]'
-                        }`}>
-                          {order.status || 'Pending'}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div> */}
             </div>
           </div>
         </div>
@@ -646,7 +442,5 @@ w-full
         </div>
       )}
     </div>
-    </>
-    
   );
 }

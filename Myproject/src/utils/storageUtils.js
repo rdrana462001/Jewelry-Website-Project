@@ -3,8 +3,6 @@
  * Ensures each logged-in user has their own separate cart and wishlist
  */
 
-import API_BASE_URL from "../config/api";
-
 /**
  * Get the current user from localStorage
  */
@@ -55,15 +53,6 @@ export const setCart = (items) => {
     localStorage.setItem(cartKey, JSON.stringify(items));
     // Dispatch custom event to notify listeners
     window.dispatchEvent(new Event("cartUpdated"));
-
-    const user = getCurrentUser();
-    if (user && user._id) {
-      fetch(`${API_BASE_URL}/api/auth/users/${user._id}/cart`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cart: items })
-      }).catch(err => console.error("Error syncing cart to DB:", err));
-    }
   } catch (error) {
     console.error("Error setting cart:", error);
   }
@@ -88,16 +77,6 @@ export const setWishlist = (items) => {
   try {
     const wishlistKey = getWishlistKey();
     localStorage.setItem(wishlistKey, JSON.stringify(items));
-    window.dispatchEvent(new Event("wishlistUpdated"));
-
-    const user = getCurrentUser();
-    if (user && user._id) {
-      fetch(`${API_BASE_URL}/api/auth/users/${user._id}/wishlist`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wishlist: items })
-      }).catch(err => console.error("Error syncing wishlist to DB:", err));
-    }
   } catch (error) {
     console.error("Error setting wishlist:", error);
   }
@@ -160,7 +139,7 @@ export const addToWishlist = (item) => {
   if (!wishlist.find((p) => p._id === item._id)) {
     wishlist.push(item);
     setWishlist(wishlist);
-    return { success: true, message: `${item.name} Added To Wishlist ` };
+    return { success: true, message: `${item.name} Added To Wishlist ❤️` };
   }
   return { success: false, message: `${item.name} is already in Wishlist` };
 };

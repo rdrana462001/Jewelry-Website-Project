@@ -49,3 +49,10 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server Running on port ${PORT}`);
 });
+
+mongoose.connection.once("open", () => {
+  console.log("Atlas Connected Successfully");
+});
+
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("Node Version:", process.version);

@@ -7,9 +7,6 @@ import Navbar from "../components/Navbar";
 import LuxuryHeader from "./LuxuryHeader";
 import ProductGrid from "../collection/ProductGrid";
 import SearchBar from "../collection/SearchBar";
-// import "./Luxury.css";
-import "../collection/Collection.css";
-
 function Luxury() {
   const { category } = useParams();
   

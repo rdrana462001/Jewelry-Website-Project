@@ -16,16 +16,6 @@ const userSchema = new mongoose.Schema({
   address: String,
   notes: String,
   photo: String,
-
-  wishlist: {
-    type: Array,
-    default: [],
-  },
-
-  cart: {
-    type: Array,
-    default: [],
-  },
 });
 
 module.exports =

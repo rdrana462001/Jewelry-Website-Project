@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+
 exports.signup = async (req, res) => {
 
   try {
@@ -282,6 +283,7 @@ exports.updateUser = async (req, res) => {
     res.status(200).json(
       updatedUser
     );
+
   }
 
   catch (error) {
@@ -294,65 +296,4 @@ exports.updateUser = async (req, res) => {
 
   }
 
-};
-
-// ================= GET USER BY ID =================
-
-exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// ================= UPDATE USER CART =================
-
-exports.updateUserCart = async (req, res) => {
-  try {
-    const { cart } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { cart },
-      { new: true }
-    );
-    res.status(200).json(updatedUser.cart);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// ================= UPDATE USER WISHLIST =================
-
-exports.updateUserWishlist = async (req, res) => {
-  try {
-    const { wishlist } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { wishlist },
-      { new: true }
-    );
-    res.status(200).json(updatedUser.wishlist);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    res.status(200).json({
-      message: "Reset link sent successfully"
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      message: error.message
-    });
-  }
 };
