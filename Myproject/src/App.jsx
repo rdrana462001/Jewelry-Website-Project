@@ -17,7 +17,6 @@ import Collection from "./collection/collection";
 import Luxury from "./Luxury/Luxury";
 import AdminDashboard from "./Admin/AdminDashboard";
 // import Cart from "./pages/Cart";
-import Home from "./Home";
 import Login from "./Login/Login";
 import Signup2 from "./Sign up/signup2";
 import Dashboard from "./Dashboard/Dashboard";

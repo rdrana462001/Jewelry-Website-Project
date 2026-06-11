@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import OrderSummary from "../pages/components/OrderSummary";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 import { getWishlist, getCartCount } from "../utils/storageUtils";
 // Simplified profile page: safe, preserves auth/localStorage and edit/save/cancel behavior
 export default function Profile() {
@@ -45,7 +46,7 @@ useEffect(() => {
   setPhotoPreview(stored.photo || null);
 
   axios
-    .get(`http://localhost:5000/api/orders/${stored._id}`)
+    .get(`${API_BASE_URL}/api/orders/user/${stored._id}`)
     .then((res) => {
       setOrders(res.data);
     })
@@ -79,7 +80,7 @@ useEffect(() => {
     const updated = { ...user, ...form, photo: photoPreview };
     
     try {
-      await axios.put(`http://localhost:5000/api/auth/users/${user._id}`, {
+      await axios.put(`${API_BASE_URL}/api/auth/users/${user._id}`, {
         name: updated.name,
         email: updated.email,
         phone: updated.phone,

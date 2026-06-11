@@ -3,11 +3,13 @@ function Button({
   onClick,
   type = "button",
   className = "",
+  disabled = false,
 }) {
   return (
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={`
         bg-gradient-to-r
         from-[#c89b3c]

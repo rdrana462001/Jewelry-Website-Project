@@ -6,8 +6,8 @@ import DashboardCards from "./Components/DashboardCards";
 import RevenueChart from "./Components/RevenueChart";
 import OrdersChart from "./Components/OrdersChart";
 import TopProducts from "./Components/TopProducts";
-import DashboardHeader from "./components/DashboardHeader";
-import LowStockProducts from "./components/LowStockProducts";
+import DashboardHeader from "./Components/DashboardHeader";
+import LowStockProducts from "./Components/LowStockProducts";
 import axios from "axios";
 import API_BASE_URL from "../config/api";
 

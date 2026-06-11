@@ -1,4 +1,11 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 function Logout() {
+  useEffect(() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }, []);
 
   return (
 
@@ -14,7 +21,7 @@ function Logout() {
           You have successfully logged out
         </p>
 
-     <a href="/login">
+     <Link to="/login">
 
   <button
     className="
@@ -33,7 +40,7 @@ function Logout() {
 
   </button>
 
-</a>
+</Link>
       </div>
 
     </div>

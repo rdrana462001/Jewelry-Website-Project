@@ -81,7 +81,7 @@ const {
 
     const body = orderId + "|" + paymentId;
     const expectedSignature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET || 'Gpegxp5M28QMB1ZhmbrmN8rN')
+      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
       .update(body.toString())
       .digest('hex');
 

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import API_BASE_URL from "../config/api";
-import "./Collection.css";
+import "./collection.css";
 
 import Navbar from "../components/Navbar";
 import CollectionHeader from "./CollectionHeader";

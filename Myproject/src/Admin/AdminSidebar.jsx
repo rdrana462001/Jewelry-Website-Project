@@ -46,8 +46,9 @@ const menuItems = [
   
 ];
   const handleLogout = () => {
-    localStorage.removeItem("adminToken");
-    navigate("/");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import API_BASE_URL from "../config/api";
 import Navbar from "../components/Navbar";
-import "../collection/Collection.css";
+import "../collection/collection.css";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 

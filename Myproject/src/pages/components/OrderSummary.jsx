@@ -52,7 +52,7 @@ function OrderSummary({ subtotal, tax, shipping, savings, total, formatPrice }) 
 
       // Initialize Razorpay Payment
      const options = {
-  key: "rzp_test_SwdooxJh05S143",
+  key: import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_SwdooxJh05S143",
 
   amount: Math.round(total * 100),
   currency: "INR",
