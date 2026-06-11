@@ -98,8 +98,8 @@ if (sortBy === "name") {
   <div className="flex flex-col lg:flex-row gap-8 items-start max-w-[1800px] mx-auto">
     
     {/* Left Side (Products & Headers) */}
-    <div className="flex-1 min-w-0 w-full">
-      <div className="text-center mb-12">
+<div className="order-2 lg:order-1 flex-1 min-w-0 w-full">
+        <div className="text-center mb-12">
         <CollectionHeader />
         <div className="mt-8 flex justify-center">
           <SearchBar
@@ -113,8 +113,8 @@ if (sortBy === "name") {
     </div>
 
     {/* Right Side Filter */}
-    <div className="w-full lg:w-[320px] flex-shrink-0 lg:sticky lg:top-36 z-10">
-      <FilterSidebar
+<div className="order-1 lg:order-2 w-full lg:w-[320px] flex-shrink-0 lg:sticky lg:top-36 z-10">
+        <FilterSidebar
         categories={[
           "All",
           "Rings",
