@@ -10,6 +10,16 @@ const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
+// import dns from 'dns";
+
+// dns.setServers(["1.1.1.1", "8.8.8.8"]);
+
+const dns = require("dns");
+
+// Change DNS
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+
+
 // Middleware
 const allowedOrigins = process.env.FRONTEND_URL
   ? [process.env.FRONTEND_URL, "http://localhost:5173"]
@@ -37,15 +47,24 @@ app.get("/", (req, res) => {
 });
 
 // Database connection
+// mongoose
+//   .connect(process.env.MONGO_URI)
+//   .then(() => {
+//     console.log("MongoDB Connected");
+//   })
+//   .catch((err) => {
+//     console.log("MongoDB Connection Error:", err.message);
+//   });
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(
+    "mongodb+srv://rudra:Rudra12345@cluster0.seyh7w7.mongodb.net/luxury?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("MongoDB Connected");
   })
   .catch((err) => {
-    console.log("MongoDB Connection Error:", err.message);
+    console.log(err);
   });
-
 mongoose.connection.once("open", () => {
   console.log("Atlas Connected Successfully");
 });
