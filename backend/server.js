@@ -27,7 +27,7 @@ const allowedOrigins = process.env.FRONTEND_URL
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: true,
     credentials: true,
   })
 );
@@ -55,10 +55,19 @@ app.get("/", (req, res) => {
 //   .catch((err) => {
 //     console.log("MongoDB Connection Error:", err.message);
 //   });
+// mongoose
+//   .connect(
+//     "mongodb+srv://rudra:Rudra12345@cluster0.seyh7w7.mongodb.net/luxury?retryWrites=true&w=majority"
+//   )
+//   .then(() => {
+//     console.log("MongoDB Connected");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
 mongoose
-  .connect(
-    "mongodb+srv://rudra:Rudra12345@cluster0.seyh7w7.mongodb.net/luxury?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected");
   })
