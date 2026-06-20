@@ -5,16 +5,22 @@ import API_BASE_URL from "../config/api";
 import Navbar from "../components/Navbar";
 import { addToCart as addToCartUtil, addToWishlist as addToWishlistUtil } from "../utils/storageUtils";
 
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 import ProductImage from "./components/ProductImage";
 import ProductInfo from "./components/ProductInfo";
 import QuantitySelector from "./components/QuantitySelector";
 
 function ProductDetails() {
   
+  const navigate = useNavigate();
   const { id } = useParams();
+  
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+
 
   // Fetch product from MongoDB using the _id
   useEffect(() => {
@@ -48,16 +54,62 @@ function ProductDetails() {
     );
   }
 
-  const addToCart = () => {
-    addToCartUtil({ ...product, quantity });
-    alert(`${quantity} ${product.name} Added To Cart 🛍️`);
-  };
+  // const addToCart = () => {
+  //   addToCartUtil({ ...product, quantity });
+  //   alert(`${quantity} ${product.name} Added To Cart 🛍️`);
+  // };
+const addToCart = () => {
 
-  const addToWishlist = () => {
-    const result = addToWishlistUtil(product);
-    alert(result.message);
-  };
+  const user = localStorage.getItem("user");
 
+  if (!user) {
+
+    toast.warning(
+      "Please login to add items to your cart 🛒"
+    );
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+
+    return;
+  }
+
+  addToCartUtil({
+    ...product,
+    quantity,
+  });
+
+  toast.success(
+    `${quantity} ${product.name} Added To Cart 🛍️`
+  );
+};
+  // const addToWishlist = () => {
+  //   const result = addToWishlistUtil(product);
+  //   alert(result.message);
+  // };
+const addToWishlist = () => {
+
+  const user = localStorage.getItem("user");
+
+  if (!user) {
+
+    toast.warning(
+      "Please login to use wishlist ❤️"
+    );
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+
+    return;
+  }
+
+  const result =
+    addToWishlistUtil(product);
+
+  toast.success(result.message);
+};
   return (
     <div className="min-h-screen bg-[#f8f5ef] pt-32 pb-20">
       <Navbar />

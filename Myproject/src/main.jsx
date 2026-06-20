@@ -16,12 +16,23 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     autoClose={3000}
   /> */}
 
-<ToastContainer
+{/* <ToastContainer
   position="bottom-right"
   autoClose={3000}
   toastStyle={{
     width: "420px",
     fontSize: "18px",
+  }}
+/> */}
+  <ToastContainer
+  position="bottom-right"
+  autoClose={3000}
+  theme="colored"
+  toastStyle={{
+    width: "90vw",
+    maxWidth: "380px",
+    fontSize: "16px",
+    borderRadius: "16px",
   }}
 />
     {/* <Home></Home> */}
