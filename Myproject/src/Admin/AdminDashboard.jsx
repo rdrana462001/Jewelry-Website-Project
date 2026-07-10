@@ -19,29 +19,24 @@ function AdminDashboard() {
     totalOrders: 0,
     totalRevenue: 0,
   });
-const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // useEffect(() => {
-  //   fetchUsers();
-  //   fetchProducts();
-  //   fetchStats();
-  // }, []);
-const fetchOrders = async () => {
-  const res = await axios.get(
-    `${API_BASE_URL}/api/orders`
-  );
+  const fetchOrders = async () => {
+    const res = await axios.get(
+      `${API_BASE_URL}/api/orders`
+    );
 
-  setOrders(res.data);
-};
-useEffect(() => {
-  fetchUsers();
-  fetchProducts();
-  fetchStats();
-  fetchOrders();
-}, []);
+    setOrders(res.data);
+  };
+  useEffect(() => {
+    fetchUsers();
+    fetchProducts();
+    fetchStats();
+    fetchOrders();
+  }, []);
   const fetchProducts = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/products`);
@@ -94,74 +89,62 @@ useEffect(() => {
   );
 
   return (
-<div
-  className={`flex min-h-screen transition-all duration-500 ${
-darkMode
-  ? "bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white"
-  : "bg-gradient-to-br from-[#faf7f2] via-[#f8f1df] to-[#f4ead2] text-black"
-  }`}
->
-  <AdminSidebar
-    isOpen={sidebarOpen}
-    setIsOpen={setSidebarOpen}
-  />
+    <div
+      className={`flex min-h-screen transition-all duration-500 ${darkMode
+        ? "bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white"
+        : "bg-gradient-to-br from-[#faf7f2] via-[#f8f1df] to-[#f4ead2] text-black"
+        }`}
+    >
+      <AdminSidebar
+        isOpen={sidebarOpen}
+        setIsOpen={setSidebarOpen}
+      />
       {/* MAIN CONTENT */}
-<div className="flex-1 flex flex-col lg:ml-64">
+      <div className="flex-1 flex flex-col lg:ml-64">
 
-    <AdminNavbar
-      toggleSidebar={() =>
-        setSidebarOpen(!sidebarOpen)
-      }
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
-    />
+        <AdminNavbar
+          toggleSidebar={() =>
+            setSidebarOpen(!sidebarOpen)
+          }
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+        />
 
-<div className="p-6 overflow-auto">
-  <div className="backdrop-blur-xl bg-white/30 dark:bg-black/20 rounded-3xl shadow-2xl border border-white/20 p-6">
-        {/* DASHBOARD CONTENT */}
-        
-        <div className="flex-1 overflow-auto">
-<div className="p-4 md:p-8 lg:p-10 max-w-[1900px] mx-auto animate-fadeIn">
-             </div> 
-{/* <div className="flex justify-end mb-8">
-  <ThemeToggle
-    darkMode={darkMode}
-    setDarkMode={setDarkMode}
-  />
-</div> */}
-            {/* HEADER */}
-            <DashboardHeader />
+        <div className="p-6 overflow-auto">
+          <div className="backdrop-blur-xl bg-white/30 dark:bg-black/20 rounded-3xl shadow-2xl border border-white/20 p-6">
+            {/* DASHBOARD CONTENT */}
 
-            {/* STATS CARDS ROW 1 */}
-            <DashboardCards
-              users={users}
-              products={products}
-              stats={stats}
-              loading={loading}
-            />
+            <div className="flex-1 overflow-auto">
+              <div className="p-4 md:p-8 lg:p-10 max-w-[1900px] mx-auto animate-fadeIn">
+              </div>
 
-            {/* CHARTS ROW */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 mt-8">              <RevenueChart orders={orders} />
-              <OrdersChart orders={orders} />
+              {/* HEADER */}
+              <DashboardHeader />
+
+              {/* STATS CARDS ROW 1 */}
+              <DashboardCards
+                users={users}
+                products={products}
+                stats={stats}
+                loading={loading}
+              />
+
+              {/* CHARTS ROW */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 mt-8">              <RevenueChart orders={orders} />
+                <OrdersChart orders={orders} />
+              </div>
+
+              {/* PRODUCTS ROW */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <TopProducts products={products} />
+                <LowStockProducts products={products} />
+              </div>
+
             </div>
-
-            {/* TABLES ROW */}
-            {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-              <RecentOrdersTable />
-              <LatestCustomers filteredUsers={filteredUsers} />
-            </div> */}
-
-            {/* PRODUCTS ROW */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-              <TopProducts products={products} />
-              <LowStockProducts products={products} />
-            </div>
-
           </div>
         </div>
-        </div>
-      </div> 
-     </div>
+      </div>
+    </div>
   );
 }
 
