@@ -7,6 +7,7 @@ import {
   motion, useScroll, useTransform, useSpring,
   AnimatePresence, useInView, useMotionValue, useAnimationFrame
 } from "framer-motion";
+import './Dashboard.css';
 
 // import bgVideo from "../assets/WG.mp4";
 /* ─────────────────────────────────────────────
@@ -41,13 +42,13 @@ import {
     muted
     loop
     playsInline
-    className="absolute inset-0 w-full h-full object-cover z-0"
+    className="bg-video"
   />
 
 {/* DARK OVERLAY */}
 
 <div
-  className="absolute inset-0 z-[1]"
+  className="dark-overlay"
   style={{
     background:
       "linear-gradient(to bottom,rgba(0,0,0,0.65),rgba(0,0,0,0.35))",
@@ -70,84 +71,10 @@ const cards = [
       }}
     >
 
-      {/* ================= GLOBAL CSS ================= */}
-
-      <style>{`
-
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Jost:wght@300;400;500&display=swap');
-
-      *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-      }
-
-      body{
-        overflow-x:hidden;
-      }
-
-      .display{
-        font-family:'Playfair Display',serif;
-      }
-
-      .jost{
-        font-family:'Jost',sans-serif;
-      }
-
-      @keyframes shimmer {
-
-        0%{
-          background-position:-200% 0;
-        }
-
-        100%{
-          background-position:200% 0;
-        }
-
-      }
-
-      @keyframes floatA {
-
-        0%,100%{
-          transform:translateY(0px);
-        }
-
-        50%{
-          transform:translateY(-20px);
-        }
-
-      }
-
-      @keyframes floatB {
-
-        0%,100%{
-          transform:translateY(0px) translateX(0px);
-        }
-
-        50%{
-          transform:translateY(-25px) translateX(10px);
-        }
-
-      }
-
-      @keyframes fly {
-
-        0%{
-          transform:translateX(-20vw);
-        }
-
-        100%{
-          transform:translateX(120vw);
-        }
-
-      }
-
-      `}</style>
-
       {/* ================= CURSOR GLOW ================= */}
 
       <div
-        className="fixed w-[300px] h-[300px] md:w-[500px] md:h-[500px] -top-[100px] -left-[100px] md:-top-[150px] md:-left-[150px] pointer-events-none z-0"
+        className="cursor-glow"
         style={{
           background:
             "radial-gradient(circle,rgba(212,175,85,0.25) 0%,rgba(212,175,85,0.08) 40%,transparent 70%)",
@@ -158,7 +85,7 @@ const cards = [
       {/* ================= ROCKET ================= */}
 
       <div
-        className="absolute bottom-[10%] -left-[20%] text-[40px] md:text-[70px] z-[2]"
+        className="rocket-anim"
         style={{
           animation: "fly 12s linear infinite",
         }}
@@ -207,7 +134,7 @@ const cards = [
       {/* ================= HERO ================ */}
 
       <section
-        className="min-h-screen flex items-center justify-center flex-col text-center relative py-[80px] md:py-[120px] px-5"
+        className="hero-section"
       >
         {/* HERO VIDEO BACKGROUND */}
 
@@ -217,13 +144,13 @@ const cards = [
   muted
   loop
   playsInline
-  className="absolute inset-0 w-full h-full object-cover z-0"
+  className="bg-video"
 />
 
 {/* DARK OVERLAY */}
 
 <div
-  className="absolute inset-0 z-[1]"
+  className="dark-overlay"
   style={{
     background:
       "linear-gradient(to bottom,rgba(0,0,0,0.65),rgba(0,0,0,0.35))",
@@ -272,7 +199,7 @@ transition={{
         {/* Diamond */}
 
         <div
-          className="absolute top-[20%] right-[5%] md:right-[10%] text-[60px] md:text-[120px] opacity-[0.08]"
+          className="hero-diamond"
           style={{
             animation: "floatA 6s ease-in-out infinite",
           }}
@@ -291,7 +218,7 @@ transition={{
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute w-[300px] h-[300px] md:w-[700px] md:h-[700px] rounded-full border border-[rgba(212,175,55,0.15)]"
+          className="hero-circle"
         />
 
         {/* Text */}
@@ -302,7 +229,7 @@ transition={{
   }}
 >
         <p
-          className="jost"
+          className="jost-font"
           style={{
             letterSpacing: "8px",
             color: G.gold,
@@ -325,7 +252,7 @@ transition={{
           THE ART OF
         </h1> */}
 <h1
-  className="display text-[60px] sm:text-[80px] md:text-[120px]"
+  className="hero-title"
   style={{
     color: G.yellow,
     background:
@@ -364,7 +291,7 @@ WebkitTextFillColor:
           HERITAGE
         </h1> */}
 <h1
-  className="display text-[60px] sm:text-[80px] md:text-[120px] italic"
+  className="hero-title-italic"
   style={{
     background:
       "linear-gradient(90deg,#c89b3c,#f5d98a,#c89b3c)",
@@ -378,7 +305,7 @@ WebkitTextFillColor:
   HERITAGE
 </h1>
         <p
-          className="jost mx-auto mt-[30px] max-w-[90%] md:max-w-[700px] text-[16px] md:text-[18px] text-white/80 leading-loose"
+          className="hero-desc"
         >
           Discover premium handcrafted jewellery with
           cinematic luxury animations, glassmorphism
@@ -450,20 +377,20 @@ WebkitTextFillColor:
       
 {/* ================= PREMIUM LUXURY SECTION ================= */}
 
-<section className="w-full bg-[#fff4fe] pt-28 pb-0 px-6 overflow-hidden">
+<section className="premium-section">
   {/* TOP HEADING */}
 
-  <div className="text-center mb-20">
+  <div className="text-center-mb-20">
 
-    <p className="tracking-[8px] text-[#c89b3c] text-sm mb-5 font-semibold">
+    <p className="subtitle-gold">
       ROYAL EXPERIENCE
     </p>
 
-    <h1 className="text-6xl md:text-8xl font-serif text-black leading-tight">
+    <h1 className="title-large">
       Timeless Luxury
     </h1>
 
-    <p className="max-w-3xl mx-auto mt-8 text-gray-600 text-lg leading-9">
+    <p className="desc-text">
 
       Crafted for elegance, inspired by heritage
       and designed with cinematic luxury effects
@@ -476,32 +403,32 @@ WebkitTextFillColor:
 
   {/* STORY SECTION */}
 
-  <div className="grid md:grid-cols-2 gap-14 items-center mb-32">
+  <div className="story-grid">
 
     {/* IMAGE */}
 
-    <div className="relative group overflow-hidden rounded-[40px] shadow-2xl">
+    <div className="image-container">
 <video
   src="/v2.mp4"
   autoPlay
   muted
   loop
   playsInline
-  className="w-full h-[400px] md:h-[700px] object-cover transition duration-700 group-hover:scale-110"
+  className="story-video"
 />
       {/* OVERLAY */}
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+      <div className="overlay-gradient"></div>
 
       {/* TEXT */}
 
-      <div className="absolute bottom-10 left-10 text-white">
+      <div className="overlay-text-bottom-left">
 
-        <p className="tracking-[6px] text-sm text-[#f5d98a] mb-4">
+        <p className="tracking-6px-gold">
           PREMIUM JEWELLERY
         </p>
 
-        <h1 className="text-5xl font-serif">
+        <h1 className="title-medium">
           Royal Gold Heritage
         </h1>
 
@@ -514,20 +441,20 @@ WebkitTextFillColor:
 
     <div>
 
-      <p className="tracking-[8px] text-[#c89b3c] text-sm mb-5 font-semibold">
+      <p className="subtitle-gold">
         OUR STORY
       </p>
 
-      <h1 className="text-6xl font-serif text-black leading-tight mb-8">
+      <h1 className="title-medium-mb8">
 
         Crafted With
-        <span className="text-[#c89b3c] italic">
+        <span className="text-gold-italic">
           {" "}Luxury
         </span>
 
       </h1>
 
-      <p className="text-gray-600 text-lg leading-9 mb-10">
+      <p className="desc-text-left">
 
         Discover handcrafted jewellery inspired
         by timeless royal heritage, cinematic
@@ -537,7 +464,7 @@ WebkitTextFillColor:
 
       </p>
 
-      <button className="px-10 py-4 rounded-full bg-gradient-to-r from-[#c89b3c] to-[#f5d98a] text-black font-bold tracking-[4px] hover:scale-105 transition duration-500 shadow-2xl">
+      <button className="btn-explore">
 
         EXPLORE MORE
 
@@ -550,38 +477,30 @@ WebkitTextFillColor:
 
   {/* PREMIUM GALLERY */}
 
-  <div className="grid md:grid-cols-3 gap-10 mb-32">
+  <div className="gallery-grid">
 
     {/* CARD 1 */}
 
-    <div className="relative overflow-hidden h-[400px] md:h-[700px] rounded-[35px] group shadow-2xl">
+    <div className="gallery-card">
 <img
   src="/12.jpg"
   alt=""
-  className="
-  w-full
-  h-full
-  min-h-[200px]
-  object-cover
-  transition
-  duration-700
-  group-hover:scale-110
-  "
+  className="gallery-img-1"
 />
 {/* <img
   src="/12.jpg"
   alt="Luxury"
   className="w-full h-[700px] object-cover transition duration-700 group-hover:scale-110"
 /> */}
-      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-500"></div>
+      <div className="gallery-overlay"></div>
 
-      <div className="absolute bottom-8 left-8 text-white">
+      <div className="gallery-text-bottom-left">
 
-        <p className="tracking-[5px] text-sm text-[#f5d98a]">
+        <p className="tracking-5px-gold">
           DIAMOND
         </p>
 
-        <h1 className="text-4xl font-serif mt-2">
+        <h1 className="title-small">
           Diamond Collection
         </h1>
 
@@ -592,31 +511,23 @@ WebkitTextFillColor:
 
     {/* CARD 2 */}
 
-    <div className="relative overflow-hidden h-[400px] md:h-[700px] rounded-[35px] group shadow-2xl">
+    <div className="gallery-card">
 
    <img
   src="/Royel%20lacklace.jpg"
   alt=""
-  className="
-  w-full
-  h-full
-  min-h-[400px] md:min-h-[700px]
-  object-cover
-  transition
-  duration-700
-  group-hover:scale-110
-  "
+  className="gallery-img-2"
 />
 
-      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-500"></div>
+      <div className="gallery-overlay"></div>
 
-      <div className="absolute bottom-8 left-8 text-white">
+      <div className="gallery-text-bottom-left">
 
-        <p className="tracking-[5px] text-sm text-[#f5d98a]">
+        <p className="tracking-5px-gold">
           GOLD
         </p>
 
-        <h1 className="text-4xl font-serif mt-2">
+        <h1 className="title-small">
           Royal Necklace
         </h1>
 
@@ -627,30 +538,22 @@ WebkitTextFillColor:
 
     {/* CARD 3 */}
 
-    <div className="relative overflow-hidden h-[400px] md:h-[700px] rounded-[35px] group shadow-2xl">
+    <div className="gallery-card">
   <img
   src="/v4.jpg"
   alt=""
-  className="
-  w-full
-  h-full
-  min-h-[400px] md:min-h-[700px]
-  object-cover
-  transition
-  duration-700
-  group-hover:scale-110
-  "
+  className="gallery-img-2"
 />
 
-      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-500"></div>
+      <div className="gallery-overlay"></div>
 
-      <div className="absolute bottom-8 left-8 text-white">
+      <div className="gallery-text-bottom-left">
 
-        <p className="tracking-[5px] text-sm text-[#f5d98a]">
+        <p className="tracking-5px-gold">
           BRIDAL
         </p>
 
-        <h1 className="text-4xl font-serif mt-2">
+        <h1 className="title-small">
           Bridal Luxury
         </h1>
 
@@ -663,41 +566,41 @@ WebkitTextFillColor:
 
   {/* STATS SECTION */}
 
-  <div className="grid md:grid-cols-3 gap-10 mb-32">
+  <div className="gallery-grid">
 
-    <div className="bg-white/70 backdrop-blur-xl border border-[#e7d7ab] rounded-[35px] py-16 text-center shadow-xl hover:-translate-y-3 transition duration-500">
+    <div className="stats-card">
 
-      <h1 className="text-6xl font-bold text-[#c89b3c] mb-4">
+      <h1 className="stats-number">
         25K+
       </h1>
 
-      <p className="text-gray-600 tracking-[4px]">
+      <p className="stats-text">
         LUXURY CUSTOMERS
       </p>
 
     </div>
 
 
-    <div className="bg-white/70 backdrop-blur-xl border border-[#e7d7ab] rounded-[35px] py-16 text-center shadow-xl hover:-translate-y-3 transition duration-500">
+    <div className="stats-card">
 
-      <h1 className="text-6xl font-bold text-[#c89b3c] mb-4">
+      <h1 className="stats-number">
         120+
       </h1>
 
-      <p className="text-gray-600 tracking-[4px]">
+      <p className="stats-text">
         PREMIUM STORES
       </p>
 
     </div>
 
 
-    <div className="bg-white/70 backdrop-blur-xl border border-[#e7d7ab] rounded-[35px] py-16 text-center shadow-xl hover:-translate-y-3 transition duration-500">
+    <div className="stats-card">
 
-      <h1 className="text-6xl font-bold text-[#c89b3c] mb-4">
+      <h1 className="stats-number">
         50+
       </h1>
 
-      <p className="text-gray-600 tracking-[4px]">
+      <p className="stats-text">
         ROYAL COLLECTIONS
       </p>
 
@@ -708,19 +611,19 @@ WebkitTextFillColor:
 
   {/* FOOTER */}
 
-  <footer className="bg-black text-white rounded-[30px] md:rounded-[45px] p-8 md:p-16">
+  <footer className="footer">
 
-    <div className="grid md:grid-cols-4 gap-14">
+    <div className="footer-grid">
 
       {/* LOGO */}
 
       <div>
 
-        <h1 className="text-5xl font-serif text-[#f5d98a] mb-6">
+        <h1 className="footer-logo">
           LUXORA
         </h1>
 
-        <p className="text-gray-400 leading-8">
+        <p className="footer-desc">
 
           Timeless luxury jewellery crafted
           with elegance, cinematic aesthetics
@@ -735,25 +638,25 @@ WebkitTextFillColor:
 
       <div>
 
-        <h2 className="text-2xl mb-6 text-[#f5d98a]">
+        <h2 className="footer-title">
           Quick Links
         </h2>
 
-        <div className="space-y-4 text-gray-400">
+        <div className="footer-links">
 
-          <p className="hover:text-white cursor-pointer">
+          <p className="footer-link-hover">
             Home
           </p>
 
-          <p className="hover:text-white cursor-pointer">
+          <p className="footer-link-hover">
             Collection
           </p>
 
-          <p className="hover:text-white cursor-pointer">
+          <p className="footer-link-hover">
             Luxury
           </p>
 
-          <p className="hover:text-white cursor-pointer">
+          <p className="footer-link-hover">
             Contact
           </p>
 
@@ -766,11 +669,11 @@ WebkitTextFillColor:
 
       <div>
 
-        <h2 className="text-2xl mb-6 text-[#f5d98a]">
+        <h2 className="footer-title">
           Collections
         </h2>
 
-        <div className="space-y-4 text-gray-400">
+        <div className="footer-links">
 
           <p>Diamond Rings</p>
 
@@ -789,11 +692,11 @@ WebkitTextFillColor:
 
       <div>
 
-        <h2 className="text-2xl mb-6 text-[#f5d98a]">
+        <h2 className="footer-title">
           Contact
         </h2>
 
-        <div className="space-y-4 text-gray-400">
+        <div className="footer-links">
 
           <p>Ahmedabad, India</p>
 
@@ -810,7 +713,7 @@ WebkitTextFillColor:
 
     {/* COPYRIGHT */}
 
-    <div className="border-t border-white/10 mt-20 pt-20 text-center text-gray-500">
+    <div className="footer-copyright">
 
       © 2026 Luxora Jewellery.
       All Rights Reserved.
