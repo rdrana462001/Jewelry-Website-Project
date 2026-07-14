@@ -90,17 +90,14 @@ function AdminDashboard() {
 
   return (
     <div
-      className={`flex min-h-screen transition-all duration-500 ${darkMode
-        ? "bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white"
-        : "bg-gradient-to-br from-[#faf7f2] via-[#f8f1df] to-[#f4ead2] text-black"
-        }`}
+        className={`admin-dashboard ${darkMode ? "dark-mode" : "light-mode"}`}
     >
       <AdminSidebar
         isOpen={sidebarOpen}
         setIsOpen={setSidebarOpen}
       />
       {/* MAIN CONTENT */}
-      <div className="flex-1 flex flex-col lg:ml-64">
+      <div className="admin-main-content">
 
         <AdminNavbar
           toggleSidebar={() =>
@@ -110,12 +107,12 @@ function AdminDashboard() {
           setDarkMode={setDarkMode}
         />
 
-        <div className="p-6 overflow-auto">
-          <div className="backdrop-blur-xl bg-white/30 dark:bg-black/20 rounded-3xl shadow-2xl border border-white/20 p-6">
+        <div className="admin-dashboard-body">
+          <div className="admin-dashboard-content-wrapper">
             {/* DASHBOARD CONTENT */}
 
-            <div className="flex-1 overflow-auto">
-              <div className="p-4 md:p-8 lg:p-10 max-w-[1900px] mx-auto animate-fadeIn">
+            <div className="admin-dashboard-inner-content">
+              <div className="admin-dashboard-header-placeholder">
               </div>
 
               {/* HEADER */}
@@ -130,12 +127,13 @@ function AdminDashboard() {
               />
 
               {/* CHARTS ROW */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 mt-8">              <RevenueChart orders={orders} />
+              <div className="admin-charts-row">
+                <RevenueChart orders={orders} />
                 <OrdersChart orders={orders} />
               </div>
 
               {/* PRODUCTS ROW */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+              <div className="admin-products-row">
                 <TopProducts products={products} />
                 <LowStockProducts products={products} />
               </div>

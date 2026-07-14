@@ -7,6 +7,7 @@ import SearchBar from "../collection/SearchBar";
 import ProductGrid from "../collection/ProductGrid";
 import { useLocation } from "react-router-dom";
 import API_BASE_URL from "../config/api";
+import "./collection.css";
 
 function Collection() {
   const { category } = useParams();
@@ -44,7 +45,7 @@ function Collection() {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-[#f8f5ef] px-5 md:px-10 py-36">
+      <div className="pages-collection-container">
         <CollectionHeader category={category} />
         <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
         <ProductGrid products={filteredProducts} />

@@ -35,14 +35,14 @@ const handleSubmit = async (e) => {
         `${API_BASE_URL}/api/auth/login`,
 
         {
-          email: formData.email,
-          password: formData.password,
-          role: loginType,
-        }
+   email: formData.email,
+   password: formData.password,
+   role: "user",
+}
 
-      );
+     );
 
-    // SAVE USER
+// SAVE USER
 
  localStorage.setItem(
   "user",
@@ -58,23 +58,9 @@ const handleSubmit = async (e) => {
 
 toast.success(response.data.message);
 
-    // ADMIN LOGIN
-
-    if (
-      loginType === "admin"
-    ) {
-
-      navigate("/admin");
-
-    }
-
     // USER LOGIN
+    navigate("/dashboard");
 
-    else {
-
-      navigate("/dashboard");
-
-    }
 
   }
 
@@ -296,31 +282,6 @@ to-[#fffaf0]
               >
                 Email
               </label>
-<select
-  value={loginType}
-  onChange={(e) =>
-    setLoginType(e.target.value)
-  }
-  className="
-  w-full
-  p-4
-  rounded-xl
-  border
-  border-gray-300
-  mb-5
-  outline-none
-  "
->
-
-  <option value="user">
-    User Login
-  </option>
-
-  <option value="admin">
-    Admin Login
-  </option>
-
-</select>
               <input
                 type="email"
                 name="email"

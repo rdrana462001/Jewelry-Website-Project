@@ -7,19 +7,11 @@ import Navbar from "../components/Navbar";
 import LuxuryHeader from "./LuxuryHeader";
 import ProductGrid from "../collection/ProductGrid";
 import SearchBar from "../collection/SearchBar";
+import "./Luxury.css";
+
 function Luxury() {
   const { category } = useParams();
   
-
-//   const [inStock, setInStock] = useState(false);
-// const [outOfStock, setOutOfStock] = useState(false);
-
-//   const [selectedCategory, setSelectedCategory] = useState("");
-//   const [minPrice, setMinPrice] = useState("");
-//   const [maxPrice, setMaxPrice] = useState("");
-//   const [products, setProducts] = useState([]);
-//   const [searchTerm, setSearchTerm] = useState("");
-
 const [inStock, setInStock] = useState(false);
 const [outOfStock, setOutOfStock] = useState(false);
 
@@ -104,16 +96,16 @@ if (sortBy === "name") {
     <>
       <Navbar />
       <div
-        className="animated-bg pt-36 pb-10 px-4 lg:px-10 lg:pb-22"
+        className="animated-bg luxury-container"
         style={{ minHeight: "100vh" }}
       >
-        <div className="flex flex-col lg:flex-row items-start gap-8 max-w-[1800px] mx-auto">
+        <div className="luxury-layout">
           
           {/* Left Side (Products & Headers) */}
-          <div className="flex-1 min-w-0 w-full">
-            <div className="text-center mb-12">
+          <div className="luxury-main-content">
+            <div className="luxury-header-wrapper">
               <LuxuryHeader />
-              <div className="mt-8 flex justify-center">
+              <div className="luxury-search-wrapper">
                 <SearchBar
                   searchTerm={searchTerm}
                   onSearchChange={setSearchTerm}
@@ -125,7 +117,7 @@ if (sortBy === "name") {
           </div>
 
           {/* Right Side Filter */}
-          <div className="w-full lg:w-[320px] flex-shrink-0 lg:sticky lg:top-36 z-10">
+          <div className="luxury-sidebar-wrapper">
             <FilterSidebar
               categories={[
                 "All",

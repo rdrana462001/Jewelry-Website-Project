@@ -91,17 +91,15 @@ if (sortBy === "name") {
   return (
     <>
       <Navbar />
-<div
-  className="animated-bg pt-36 pb-10 px-4 lg:px-10 lg:pb-22"
-  style={{ minHeight: "100vh" }}
->
-  <div className="flex flex-col lg:flex-row gap-8 items-start max-w-[1800px] mx-auto">
-    
+<div className="collection-page animated-bg">
+  <div className="collection-container">
+
     {/* Left Side (Products & Headers) */}
-<div className="order-2 lg:order-1 flex-1 min-w-0 w-full">
-        <div className="text-center mb-12">
+    <div className="collection-content">
+      <div className="collection-header">
         <CollectionHeader />
-        <div className="mt-8 flex justify-center">
+
+        <div className="search-container">
           <SearchBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
@@ -113,8 +111,8 @@ if (sortBy === "name") {
     </div>
 
     {/* Right Side Filter */}
-<div className="order-1 lg:order-2 w-full lg:w-[320px] flex-shrink-0 lg:sticky lg:top-36 z-10">
-        <FilterSidebar
+    <div className="filter-sidebar-wrapper">
+      <FilterSidebar
         categories={[
           "All",
           "Rings",

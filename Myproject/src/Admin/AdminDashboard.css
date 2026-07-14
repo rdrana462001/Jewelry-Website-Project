@@ -1,27 +1,98 @@
-.animated-admin-bg {
-  background: linear-gradient(
-    -45deg,
-    #faf7f2,
-    #f8f1df,
-    #ecd9a3,
-    #f4ead2,
-    #fffdf8
-  );
-
-  background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  transition: all 0.5s ease-in-out;
 }
 
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
+.admin-dashboard.light-mode {
+  background: linear-gradient(to bottom right, #faf7f2, #f8f1df, #f4ead2);
+  color: black;
+}
 
-  50% {
-    background-position: 100% 50%;
-  }
+.admin-dashboard.dark-mode {
+  background: linear-gradient(to bottom right, #0a0a0a, #1a1a1a, #000000);
+  color: white;
+}
 
-  100% {
-    background-position: 0% 50%;
+.admin-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .admin-main-content {
+    margin-left: 16rem; /* Equivalent to lg:ml-64 */
+  }
+}
+
+.admin-dashboard-body {
+  padding: 1.5rem; /* Equivalent to p-6 */
+  overflow: auto;
+}
+
+.admin-dashboard-content-wrapper {
+  backdrop-filter: blur(12px); /* Equivalent to backdrop-blur-xl */
+  background-color: rgba(255, 255, 255, 0.3); /* Equivalent to bg-white/30 */
+  border-radius: 1.5rem; /* Equivalent to rounded-3xl */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Equivalent to shadow-2xl */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Equivalent to border border-white/20 */
+  padding: 1.5rem; /* Equivalent to p-6 */
+}
+
+.admin-dashboard.dark-mode .admin-dashboard-content-wrapper {
+  background-color: rgba(0, 0, 0, 0.2); /* Equivalent to dark:bg-black/20 */
+}
+
+.admin-dashboard-inner-content {
+  flex: 1;
+  overflow: auto;
+}
+
+.admin-dashboard-header-placeholder {
+  padding: 1rem; /* Equivalent to p-4 */
+  max-width: 1900px; /* Equivalent to max-w-[1900px] */
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.5s ease-in-out; /* Equivalent to animate-fadeIn */
+}
+
+@media (min-width: 768px) {
+  .admin-dashboard-header-placeholder {
+    padding: 2rem; /* Equivalent to md:p-8 */
+  }
+}
+
+@media (min-width: 1024px) {
+  .admin-dashboard-header-placeholder {
+    padding: 2.5rem; /* Equivalent to lg:p-10 */
+  }
+}
+
+.admin-charts-row,
+.admin-products-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* Equivalent to gap-8 */
+  margin-bottom: 2rem; /* Equivalent to mb-8 */
+}
+
+.admin-charts-row {
+  margin-top: 2rem; /* Equivalent to mt-8 */
+}
+
+@media (min-width: 1024px) {
+  .admin-charts-row,
+  .admin-products-row {
+    grid-template-columns: 1fr 1fr; /* Equivalent to lg:grid-cols-2 */
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
