@@ -46,10 +46,9 @@ router.get(
 
 router.put(
   "/products/:id",
+  upload.single("image"),
   updateProduct
 );
-
-
 // ================= DELETE PRODUCT =================
 
 router.delete(

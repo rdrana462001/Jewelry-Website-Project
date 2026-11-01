@@ -7,10 +7,10 @@ import AdminNavbar from "./AdminNavbar";
 function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [mainCategory, setMainCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
-
+const [previewImage, setPreviewImage] = useState("");
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -40,7 +40,11 @@ const [imageFile, setImageFile] = useState(null);
 }
 
 setSubCategory(response.data.category);
-
+setPreviewImage(
+  response.data.image?.startsWith("/uploads")
+    ? `${API_BASE_URL}${response.data.image}`
+    : response.data.image
+);
 
       setLoading(false);
     } catch (error) {
@@ -59,10 +63,28 @@ setSubCategory(response.data.category);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    formData.append("category", product.category);
+    formData.append("description", product.description);
+    formData.append("stock", product.stock);
+    if (imageFile) {
+      formData.append("image", imageFile);
+    } else {
+      formData.append("image", product.image);
+    }
+
     try {
       await axios.put(
         `${API_BASE_URL}/api/products/${id}`,
-        product
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       alert("Product Updated Successfully");
       navigate("/products");
@@ -199,28 +221,25 @@ setSubCategory(response.data.category);
 
             <div>
               <label className="block text-gray-700 mb-2 font-medium">Image URL</label>
-          <input
+  <input
   type="file"
   accept="image/*"
-  onChange={(e) =>
-    setImageFile(e.target.files[0])
-  }
+  onChange={(e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      setImageFile(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  }}
   className="w-full border border-[#c89b3c] p-4 rounded-xl"
 />
-             {product.image && (
-  <div className="mt-4 w-32 h-32 rounded-xl overflow-hidden border border-gray-200">
+           {previewImage && (
+  <div className="mt-4 w-40 h-40 rounded-xl overflow-hidden border border-gray-200 shadow">
     <img
-      src={
-        product.image.startsWith("/uploads")
-          ? `${API_BASE_URL}${product.image}`
-          : product.image
-      }
+      src={previewImage}
       alt="Preview"
       className="w-full h-full object-cover"
-      onError={(e) => {
-        e.target.src =
-          "https://via.placeholder.com/150?text=No+Image";
-      }}
     />
   </div>
 )}

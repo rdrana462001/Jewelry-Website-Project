@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import API_BASE_URL from "../../config/api";
 
 function CartItem({
   item,
@@ -33,11 +34,24 @@ function CartItem({
           to={`/product/${item._id}`}
           className="w-full sm:w-[180px] h-[180px] flex-shrink-0 group"
         >
-          <img
+          {/* <img
             src={item.image}
             alt={item.name}
             className="w-full h-full object-cover rounded-2xl group-hover:shadow-xl transition duration-300"
-          />
+          /> */}
+          <img
+  src={
+    item.image?.startsWith("/uploads")
+      ? `${API_BASE_URL}${item.image}`
+      : item.image
+  }
+  alt={item.name}
+  className="w-full h-full object-cover rounded-2xl group-hover:shadow-xl transition duration-300"
+  onError={(e) => {
+    e.target.src =
+      "https://via.placeholder.com/300x300?text=No+Image";
+  }}
+/>
         </Link>
 
         <div className="flex-1 flex flex-col justify-between">

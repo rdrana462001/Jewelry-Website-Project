@@ -108,7 +108,7 @@ export default function ProductCard({ item }) {
                 : item.image
             }
             alt={item.name}
-            className="w-full h-56 object-contain bg-white p-4 rounded-t-3xl"
+            className="w-full h-full object-contain bg-white p-4 rounded-t-3xl transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
               e.target.src =
                 "https://via.placeholder.com/300x300?text=No+Image";

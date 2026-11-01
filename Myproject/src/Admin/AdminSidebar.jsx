@@ -4,47 +4,37 @@ import { Link, useNavigate } from "react-router-dom";
 function AdminSidebar({ isOpen, setIsOpen }) {
   const navigate = useNavigate();
 
-//   const menuItems = [
-//     { id: "dashboard", label: "Dashboard", icon: "📊" },
-//     { id: "add-product", label: "Add Product", icon: "➕" },
-//     { id: "products", label: "Products", icon: "📦" },
-//     { id: "orders", label: "Orders", icon: "🛒" },
-//     { id: "customers", label: "Customers", icon: "👥" },
-//     { id: "reviews", label: "Reviews", icon: "⭐" },
-//     { id: "analytics", label: "Analytics", icon: "📈" },
-//     { id: "settings", label: "Settings", icon: "⚙️" },
-//   ];
-const menuItems = [
-  {
-    label: "Dashboard",
-    icon: "",
-    path: "/admin",
-  },
+  const menuItems = [
+    {
+      label: "Dashboard",
+      icon: "",
+      path: "/admin",
+    },
 
-  {
-    label: "Add Product",
-    icon: "",
-    path: "/add-product",
-  },
+    {
+      label: "Add Product",
+      icon: "",
+      path: "/add-product",
+    },
 
-  {
-    label: "Products",
-    icon: "",
-    path: "/products",
-  },
+    {
+      label: "Products",
+      icon: "",
+      path: "/products",
+    },
 
-  {
-    label: "Users",
-    icon: "",
-    path: "/users",
-  },
-   {
-    label: "Admin Orders",
-    icon: "",
-    path: "/admin-orders",
-  },
-  
-];
+    {
+      label: "Users",
+      icon: "",
+      path: "/users",
+    },
+    {
+      label: "Admin Orders",
+      icon: "",
+      path: "/admin-orders",
+    },
+
+  ];
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -67,11 +57,10 @@ const menuItems = [
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       > */}
-  <div
-  className={`fixed left-0 top-0 bottom-0 w-64 bg-gradient-to-b from-black via-[#020617] to-black text-white shadow-2xl z-50 transition-transform duration-300 ${
-    isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-  }`}
->
+      <div
+        className={`fixed left-0 top-0 bottom-0 w-64 bg-gradient-to-b from-black via-[#020617] to-black text-white shadow-2xl z-50 transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          }`}
+      >
         {/* LOGO */}
         <div className="p-6 border-b border-[#c89b3c]/30 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -97,10 +86,10 @@ const menuItems = [
         <nav className="flex-1 p-6 overflow-y-auto">
           <div className="space-y-2">
             {menuItems.map((item) => (
-           <Link
-  key={item.label}
-  to={item.path}
-  className="
+              <Link
+                key={item.label}
+                to={item.path}
+                className="
   flex
   items-center
   gap-3
@@ -114,7 +103,7 @@ const menuItems = [
   duration-300
   group
   "
->
+              >
                 <span className="text-2xl group-hover:scale-110 transition duration-300">
                   {item.icon}
                 </span>
@@ -130,7 +119,7 @@ const menuItems = [
             onClick={handleLogout}
             className="w-full py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold transition duration-300 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-red-500/30"
           >
-             Logout
+            Logout
           </button>
         </div>
       </div>

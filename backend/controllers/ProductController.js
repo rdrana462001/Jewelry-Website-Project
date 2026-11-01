@@ -162,40 +162,36 @@ async (req, res) => {
 
 
 // ================= UPDATE PRODUCT =================
-
-exports.updateProduct =
-async (req, res) => {
-
+exports.updateProduct = async (req, res) => {
   try {
+
+    const updateData = {
+      name: req.body.name,
+      price: req.body.price,
+      category: req.body.category,
+      description: req.body.description,
+      stock: req.body.stock,
+    };
+
+    // New image uploaded
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
 
     const updatedProduct =
       await Product.findByIdAndUpdate(
-
         req.params.id,
-
-        req.body,
-
-        {
-          new: true
-        }
-
+        updateData,
+        { new: true }
       );
 
-    res.status(200).json(
-      updatedProduct
-    );
+    res.status(200).json(updatedProduct);
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     res.status(500).json({
-
-      message:
-        error.message
-
+      message: error.message
     });
 
   }
-
 };
